@@ -1,6 +1,7 @@
 import { CheckCircle2, XCircle, AlertTriangle, Shield, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { FileContentDisplay } from "./FileContentDisplay";
 import type { AnalysisResult } from "./FileUpload";
 
 interface AnalysisResultsProps {
@@ -107,6 +108,14 @@ export const AnalysisResults = ({ results }: AnalysisResultsProps) => {
                   </p>
                 )}
               </div>
+            </div>
+            
+            {/* File Content Display */}
+            <div className="mt-4">
+              <FileContentDisplay 
+                content={result.content} 
+                suspiciousPatterns={result.suspiciousPatterns}
+              />
             </div>
           </Card>
         );
