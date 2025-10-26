@@ -23,7 +23,7 @@ export const Chatbot = ({ userRole, fileName }: ChatbotProps) => {
     {
       id: "1",
       role: "assistant",
-      content: `Hello! I'm the Prometheus AI Agent Firewall. I'm analyzing access to "${fileName}" for your role: ${userRole}. How can I help you?`,
+      content: `Hello! I'm the VecSec AI Agent Firewall. I'm analyzing access to "${fileName}" for your role: ${userRole}. How can I help you?`,
       timestamp: new Date(),
     },
   ]);

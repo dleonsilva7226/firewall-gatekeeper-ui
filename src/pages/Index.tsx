@@ -7,10 +7,10 @@ import { StatsOverview } from "@/components/StatsOverview";
 
 const Index = () => {
   const [selectedRole, setSelectedRole] = useState<UserRole>("admin");
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([]);
+  const [currentAnalysis, setCurrentAnalysis] = useState<AnalysisResult | null>(null);
 
   const handleFileAnalyzed = (result: AnalysisResult) => {
-    setAnalysisResults(prev => [result, ...prev]);
+    setCurrentAnalysis(result);
   };
 
   return (
@@ -51,18 +51,20 @@ const Index = () => {
         <RoleSelector selectedRole={selectedRole} onRoleChange={setSelectedRole} />
 
         {/* Stats Overview */}
-        {analysisResults.length > 0 && (
-          <StatsOverview results={analysisResults} />
+        {currentAnalysis && (
+          <StatsOverview results={[currentAnalysis]} />
         )}
 
         {/* File Upload */}
         <FileUpload onFileAnalyzed={handleFileAnalyzed} />
 
-        {/* Analysis Results */}
-        <div className="space-y-4">
-          <h3 className="text-2xl font-bold">Analysis History</h3>
-          <AnalysisResults results={analysisResults} userRole={selectedRole} />
-        </div>
+        {/* Current Analysis */}
+        {currentAnalysis && (
+          <div className="space-y-4">
+            <h3 className="text-2xl font-bold">Current Analysis</h3>
+            <AnalysisResults results={[currentAnalysis]} userRole={selectedRole} />
+          </div>
+        )}
       </main>
 
       {/* Footer */}

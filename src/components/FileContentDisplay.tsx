@@ -2,7 +2,6 @@ import { AlertTriangle, FileText, Image as ImageIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { Chatbot } from "@/components/Chatbot";
 import type { UserRole } from "@/components/RoleSelector";
 
 interface FileContentDisplayProps {
@@ -140,9 +139,6 @@ export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, file
           )}
         </div>
       )}
-
-      {/* Chatbot */}
-      <Chatbot userRole={userRole} fileName={fileName} />
     </Card>
   );
 };
