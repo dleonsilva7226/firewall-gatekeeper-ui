@@ -1,4 +1,4 @@
-import { AlertTriangle, FileText } from "lucide-react";
+import { AlertTriangle, FileText, Image as ImageIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
@@ -15,9 +15,11 @@ interface FileContentDisplayProps {
   }>;
   userRole: UserRole;
   fileName: string;
+  fileType: string;
+  imageData?: string;
 }
 
-export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, fileName }: FileContentDisplayProps) => {
+export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, fileName, fileType, imageData }: FileContentDisplayProps) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const renderHighlightedContent = () => {
@@ -78,11 +80,20 @@ export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, file
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-3">
-          <FileText className="w-5 h-5 text-primary" />
+          {fileType.startsWith('image/') ? (
+            <ImageIcon className="w-5 h-5 text-primary" />
+          ) : (
+            <FileText className="w-5 h-5 text-primary" />
+          )}
           <div>
-            <h4 className="font-semibold">File Contents</h4>
+            <h4 className="font-semibold">
+              {fileType.startsWith('image/') ? 'Image Preview' : 'File Contents'}
+            </h4>
             <p className="text-xs text-muted-foreground">
-              {suspiciousPatterns.length} suspicious pattern{suspiciousPatterns.length !== 1 ? "s" : ""} detected
+              {fileType.startsWith('image/') 
+                ? 'Image analysis results' 
+                : `${suspiciousPatterns.length} suspicious pattern${suspiciousPatterns.length !== 1 ? "s" : ""} detected`
+              }
             </p>
           </div>
         </div>
@@ -93,7 +104,7 @@ export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, file
       
       {isExpanded && (
         <div className="p-6">
-          {suspiciousPatterns.length > 0 && (
+          {suspiciousPatterns.length > 0 && !fileType.startsWith('image/') && (
             <div className="mb-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
               <div className="flex items-start gap-2 mb-2">
                 <AlertTriangle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
@@ -109,9 +120,24 @@ export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, file
             </div>
           )}
           
-          <div className="bg-secondary/50 rounded-lg p-4 max-h-96 overflow-auto border border-border">
-            {renderHighlightedContent()}
-          </div>
+          {fileType.startsWith('image/') && imageData ? (
+            <div className="space-y-4">
+              <div className="bg-secondary/50 rounded-lg p-4 border border-border">
+                <img 
+                  src={imageData} 
+                  alt={fileName}
+                  className="max-w-full h-auto max-h-96 mx-auto rounded-lg shadow-lg"
+                />
+              </div>
+              <div className="bg-secondary/50 rounded-lg p-4 max-h-96 overflow-auto border border-border">
+                <div className="whitespace-pre-wrap text-foreground font-mono text-sm">{content}</div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-secondary/50 rounded-lg p-4 max-h-96 overflow-auto border border-border">
+              {renderHighlightedContent()}
+            </div>
+          )}
         </div>
       )}
 

@@ -1,4 +1,4 @@
-import { Shield, CheckCircle2, XCircle, Activity } from "lucide-react";
+import { CheckCircle2, XCircle, Activity } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import type { AnalysisResult } from "./FileUpload";
 
@@ -11,9 +11,6 @@ export const StatsOverview = ({ results }: StatsOverviewProps) => {
   const approved = results.filter(r => r.status === "approved").length;
   const blocked = results.filter(r => r.status === "blocked").length;
   const warnings = results.filter(r => r.status === "warning").length;
-  const avgScore = total > 0 
-    ? Math.round(results.reduce((sum, r) => sum + r.score, 0) / total) 
-    : 0;
 
   const stats = [
     { 
@@ -37,17 +34,10 @@ export const StatsOverview = ({ results }: StatsOverviewProps) => {
       color: "text-destructive",
       bgColor: "bg-destructive/10"
     },
-    { 
-      label: "Avg Score", 
-      value: `${avgScore}%`, 
-      icon: Shield, 
-      color: "text-accent",
-      bgColor: "bg-accent/10"
-    },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {stats.map((stat) => {
         const Icon = stat.icon;
         return (

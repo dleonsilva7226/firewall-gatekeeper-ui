@@ -68,24 +68,6 @@ export const AnalysisResults = ({ results, userRole }: AnalysisResultsProps) => 
                   </Badge>
                 </div>
 
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="text-muted-foreground">Security Score</span>
-                      <span className={`font-semibold ${statusColor}`}>{result.score}%</span>
-                    </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full transition-all duration-1000 ${
-                          result.status === "approved" ? "bg-success" 
-                          : result.status === "blocked" ? "bg-destructive" 
-                          : "bg-accent"
-                        }`}
-                        style={{ width: `${result.score}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
 
                 {result.threats.length > 0 && (
                   <div className="space-y-2">
@@ -119,6 +101,8 @@ export const AnalysisResults = ({ results, userRole }: AnalysisResultsProps) => 
                 suspiciousPatterns={result.suspiciousPatterns}
                 userRole={userRole}
                 fileName={result.fileName}
+                fileType={result.fileType}
+                imageData={result.imageData}
               />
             </div>
           </Card>
