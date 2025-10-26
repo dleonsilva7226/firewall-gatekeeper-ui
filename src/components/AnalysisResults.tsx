@@ -3,12 +3,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileContentDisplay } from "./FileContentDisplay";
 import type { AnalysisResult } from "./FileUpload";
+import type { UserRole } from "./RoleSelector";
 
 interface AnalysisResultsProps {
   results: AnalysisResult[];
+  userRole: UserRole;
 }
 
-export const AnalysisResults = ({ results }: AnalysisResultsProps) => {
+export const AnalysisResults = ({ results, userRole }: AnalysisResultsProps) => {
   if (results.length === 0) {
     return (
       <Card className="p-12 border-primary/20 bg-card/50 backdrop-blur-sm text-center">
@@ -115,6 +117,8 @@ export const AnalysisResults = ({ results }: AnalysisResultsProps) => {
               <FileContentDisplay 
                 content={result.content} 
                 suspiciousPatterns={result.suspiciousPatterns}
+                userRole={userRole}
+                fileName={result.fileName}
               />
             </div>
           </Card>

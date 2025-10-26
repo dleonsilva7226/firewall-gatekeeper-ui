@@ -61,7 +61,7 @@ const Index = () => {
         {/* Analysis Results */}
         <div className="space-y-4">
           <h3 className="text-2xl font-bold">Analysis History</h3>
-          <AnalysisResults results={analysisResults} />
+          <AnalysisResults results={analysisResults} userRole={selectedRole} />
         </div>
       </main>
 

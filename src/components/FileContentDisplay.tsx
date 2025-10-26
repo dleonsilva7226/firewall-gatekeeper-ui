@@ -2,6 +2,8 @@ import { AlertTriangle, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { Chatbot } from "@/components/Chatbot";
+import type { UserRole } from "@/components/RoleSelector";
 
 interface FileContentDisplayProps {
   content: string;
@@ -11,9 +13,11 @@ interface FileContentDisplayProps {
     startIndex: number;
     endIndex: number;
   }>;
+  userRole: UserRole;
+  fileName: string;
 }
 
-export const FileContentDisplay = ({ content, suspiciousPatterns }: FileContentDisplayProps) => {
+export const FileContentDisplay = ({ content, suspiciousPatterns, userRole, fileName }: FileContentDisplayProps) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const renderHighlightedContent = () => {
@@ -110,6 +114,9 @@ export const FileContentDisplay = ({ content, suspiciousPatterns }: FileContentD
           </div>
         </div>
       )}
+
+      {/* Chatbot */}
+      <Chatbot userRole={userRole} fileName={fileName} />
     </Card>
   );
 };
